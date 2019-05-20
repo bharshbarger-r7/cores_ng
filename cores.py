@@ -81,6 +81,7 @@ class Cores(object):
 req.onload = reqListener;
 req.open('{0}','{1}',true);
 req.withCredentials = {2};
+req.setRequestHeader();
 req.send();
 function reqListener() {{
     document.getElementById("loot").innerHTML = (this.responseText);
@@ -92,6 +93,7 @@ function reqListener() {{
 req.onload = reqListener;
 req.open('{0}','{1}',true);
 req.withCredentials = {2};
+req.setRequestHeader();
 req.send();
 function reqListener() {{
 window.alert(this.responseText);
@@ -188,6 +190,15 @@ def main():
     Contributors = 'Bill Harshbarger'
 
     parser = argparse.ArgumentParser()
+    parser.add_argument('-a', '--autolaunch_browser', \
+        help='Auto launches a browser', \
+        action='store_true')
+    parser.add_argument('-c', '--access_control', \
+        action='store_true', \
+        help='Sets Access-Control-Allow-Credentials to true')
+    parser.add_argument('-d', '--headers', \
+        type=str, \
+        help='Specify optional headers for authentication, JWT,etc')
     parser.add_argument('-m', '--method', \
         metavar='get, post, etc.', \
         help='Define HTTP request method ex: -m post', \
@@ -199,12 +210,6 @@ def main():
         help='Port to start local HTTP server on.', \
         required=True, \
         type=int)
-    parser.add_argument('-c', '--access_control', \
-        action='store_true', \
-        help='Sets Access-Control-Allow-Credentials to true')
-    parser.add_argument('-a', '--autolaunch_browser', \
-        help='Auto launches a browser', \
-        action='store_true')
     parser.add_argument('-s', '--log_style', \
         metavar='alert || html', \
         nargs=1, \
